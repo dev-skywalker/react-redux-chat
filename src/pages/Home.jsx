@@ -15,6 +15,10 @@ const Home = () => {
 
     const fetchUserDetails = async () => {
         try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                navigate('/email');
+            }
             const URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/user-details`
             const response = await axios({
                 url: URL,
@@ -33,10 +37,7 @@ const Home = () => {
         }
     }
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            navigate('/email');
-        }
+
     }, [navigate]);
 
     useEffect(() => {
