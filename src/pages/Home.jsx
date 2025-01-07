@@ -15,15 +15,21 @@ const Home = () => {
 
     const fetchUserDetails = async () => {
         try {
+            const token = localStorage.getItem("token")
+            if (!token) {
+                dispatch(logout())
+                navigate("/login")
+                return
+            }
             const URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/user-details`
             const response = await axios({
                 url: URL,
-                withCredentials: true
+                headers: { "Authorization": `Bearer ${token}` }
             })
 
             if (response.data.data.logout) {
                 dispatch(logout())
-                navigate("/email")
+                navigate("/login")
             }
 
             dispatch(setUser(response.data.data))
@@ -40,9 +46,15 @@ const Home = () => {
 
     /***socket connection */
     useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+            dispatch(logout())
+            navigate("/login")
+            return
+        }
         const socketConnection = io(import.meta.env.VITE_APP_BACKEND_URL, {
             auth: {
-                token: localStorage.getItem('token')
+                token: token
             },
         })
 
