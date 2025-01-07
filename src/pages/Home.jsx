@@ -36,9 +36,6 @@ const Home = () => {
             console.log("error", error)
         }
     }
-    useEffect(() => {
-
-    }, [navigate]);
 
     useEffect(() => {
         fetchUserDetails()
