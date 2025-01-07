@@ -20,7 +20,8 @@ const Home = () => {
                 url: URL,
                 withCredentials: true
             })
-
+            console.log('User is not', response.data.data);
+            console.log('User is not', response.data.data.logout);
             if (!response.data.data || response.data.data.logout) {
                 console.log('User is not authenticated, redirecting to /email.');
                 dispatch(logout());
