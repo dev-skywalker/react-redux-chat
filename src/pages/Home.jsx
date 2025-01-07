@@ -13,7 +13,6 @@ const Home = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    console.log('user', user)
     const fetchUserDetails = async () => {
         try {
             const URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/user-details`
@@ -33,10 +32,16 @@ const Home = () => {
             console.log("error", error)
         }
     }
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate('/email');
+        }
+    }, [navigate]);
 
     useEffect(() => {
         fetchUserDetails()
-    }, [])
+    }, [dispatch, navigate])
 
     /***socket connection */
     useEffect(() => {
