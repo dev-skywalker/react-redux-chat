@@ -20,11 +20,12 @@ const Home = () => {
                 url: URL,
                 withCredentials: true
             })
-            console.log("current Details", response.data.data)
-            // if (!response.data.data) {
-            //     dispatch(logout())
-            //     navigate("/email")
-            // }
+
+            if (response.data.data.logout) {
+                dispatch(logout())
+                navigate("/email")
+            }
+
             dispatch(setUser(response.data.data))
 
             console.log("current user Details", response)
@@ -35,7 +36,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchUserDetails()
-    }, [dispatch, navigate])
+    }, [])
 
     /***socket connection */
     useEffect(() => {
