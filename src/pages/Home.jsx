@@ -20,16 +20,14 @@ const Home = () => {
                 url: URL,
                 withCredentials: true
             })
-            console.log('User is not', response.data.data);
-            console.log('User is not', response.data.data.logout);
-            if (!response.data.data || response.data.data.logout) {
-                console.log('User is not authenticated, redirecting to /email.');
-                dispatch(logout());
-                navigate("/email");
-                return;
+            console.log("current Details", response.data.data.logout)
+            if (response.data.data.logout) {
+                dispatch(logout())
+                navigate("/email")
             }
+            dispatch(setUser(response.data.data))
 
-            dispatch(setUser(response.data.data));
+            console.log("current user Details", response)
         } catch (error) {
             console.log("error", error)
         }
