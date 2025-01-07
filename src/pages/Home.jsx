@@ -54,7 +54,7 @@ const Home = () => {
         }
         const socketConnection = io(import.meta.env.VITE_APP_BACKEND_URL, {
             auth: {
-                token: token
+                token: localStorage.getItem('token')
             },
         })
 
