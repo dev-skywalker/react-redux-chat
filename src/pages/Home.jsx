@@ -15,23 +15,20 @@ const Home = () => {
 
     const fetchUserDetails = async () => {
         try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                navigate('/email');
-            }
             const URL = `${import.meta.env.VITE_APP_BACKEND_URL}/api/user-details`
             const response = await axios({
                 url: URL,
                 withCredentials: true
             })
 
-            dispatch(setUser(response.data.data))
-
-            if (response.data.data.logout) {
-                dispatch(logout())
-                navigate("/email")
+            if (!response.data.data || response.data.data.logout) {
+                console.log('User is not authenticated, redirecting to /email.');
+                dispatch(logout());
+                navigate("/email");
+                return;
             }
-            console.log("current user Details", response)
+
+            dispatch(setUser(response.data.data));
         } catch (error) {
             console.log("error", error)
         }
