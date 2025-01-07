@@ -21,7 +21,7 @@ const Home = () => {
                 withCredentials: true
             })
             console.log("current Details", response.data.data.logout)
-            if (response.data.data.logout) {
+            if (!response.data.data) {
                 dispatch(logout())
                 navigate("/email")
             }
